@@ -1,9 +1,7 @@
-//* Import the customers.routes file with all de methods
-import customerRoutes from './routes/customers.routes';
+const customerRoutes = require('./routes/customers.routes');
 
-//* Here I defined the first endpoint
 const router = (app) => {
-    app.use('/customers', customerRoutes);
+    app.use('/personas', customerRoutes);
 };
 
-export default router;
+module.exports = router;

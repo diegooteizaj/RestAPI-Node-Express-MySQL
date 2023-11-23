@@ -1,15 +1,17 @@
-import express from 'express';
-import morgan from 'morgan';
-import dotenv from 'dotenv';
-import router from './router';
-import cors from 'cors';
+const express = require('express');
+const morgan = require('morgan');
+
+
+const router = require('./router');
+const cors = require('cors');
+
 
 //* Initializations
 const app = express();
-dotenv.config();
+
 
 //* Settings
-const port = process.env.NODE_PORT;
+const port = 8085;
 
 //* Middlewares
 app.use(morgan('dev'));
