@@ -7,7 +7,7 @@ const {
     getPersonas,
     getPersonasById,
     createNewCustomer,
-    updateCustomer,
+    updatePersona,
     deleteUnaPersona,
     deleteAllCustomers
   } = require('../controllers/customerController');
@@ -16,7 +16,7 @@ const {
 router.get('/', getPersonas); //localhost:5000/customers/
 router.get('/getIdPersona/:id', getPersonasById); //localhost:5000/customers/id/1
 // router.post('/add', createNewCustomer); //localhost:5000/customers/add
-// router.put('/edit/:id', updateCustomer); //localhost:5000/customers/edit/1
+router.put('/updatePersona/:id', updatePersona); //localhost:5000/customers/edit/1
  router.delete('/deletePersonas/:id', deleteUnaPersona); //localhost:5000/customers/delete/1
 // router.delete('/deleteCustomers', deleteAllCustomers); //localhost:5000/customers/deleteCustomers
 

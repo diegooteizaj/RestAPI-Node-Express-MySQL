@@ -4,7 +4,7 @@ const dbConnection = mysql.createConnection({
   host: 'localhost',
   user: 'root',
   password: '0123456789',
-  database: 'ultrasound',
+  database: 'MineriaDatabase',
   port: '3306',
 });
 

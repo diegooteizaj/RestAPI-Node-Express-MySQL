@@ -19,7 +19,7 @@ const deleteUnaPersona = (req, res) => {
         return res.json('You must enter a valid id as a parameter');
     }
     
-    let sqlQuery = `DELETE FROM persona WHERE idPersona = ${id}`;
+    let sqlQuery = `DELETE FROM persona WHERE id_persona = ${id}`;
 
     dbConnection.query(sqlQuery, error => {
         if (error) throw error; 
@@ -31,7 +31,7 @@ const getPersonasById = (req, res) => {
 
     // const id = parseInt(req.params.id);
     const id = req.params.id
-    let sqlQuery = `SELECT * FROM persona WHERE idPersona = ${id}`;
+    let sqlQuery = `SELECT * FROM persona WHERE id_persona = ${id}`;
 
     // This method verifies that the id passed by parameter is a number, if it is not, it sends an error message
     if (isNaN(id)) {
@@ -44,12 +44,46 @@ const getPersonasById = (req, res) => {
     });
 };
 
+ const updatePersona = (req, res) => {
+    
+    const id = parseInt(req.params.id);
+    const persona = req.body;
+    const personaObj = [
+        persona.nombre,
+        persona.correo,
+        persona.telefono,
+        persona.cargo
+    ];
+
+    if (isNaN(id)) {
+        return res.json('You must enter a valid id as a parameter');
+    }
+
+    // if (!persona.first_name || !persona.last_name || !persona.email || !persona.age) {
+    //     return res.json({
+    //         ErrorCode: 204,
+    //         Message: 'Fields cannot be empty'
+    //     });
+    // }
+
+    let sqlQuery = `UPDATE persona SET nombre = ?, correo = ?, telefono = ?, cargo_empresa = ? WHERE id_persona = ${id}`
+
+    dbConnection.query(sqlQuery, personaObj,  (error, result) => {
+        if (error) throw error;
+        if (result.affectedRow === 0) {
+            res.send('No customer was updated');
+        }
+        res.json(`persona with id ${id} updated successfully`);
+    });
+};
+
 
 
 module.exports = {
     getPersonas,
     deleteUnaPersona,
-    getPersonasById
+    getPersonasById,
+    updatePersona
 };
 
 
@@ -81,38 +115,7 @@ module.exports = {
 //     });
 // };
 
-// export const updateCustomer = (req, res) => {
-    
-//     const id = parseInt(req.params.id);
-//     const customer = req.body;
-//     const customerObj = [
-//         customer.first_name,
-//         customer.last_name,
-//         customer.email,
-//         customer.age
-//     ];
 
-//     if (isNaN(id)) {
-//         return res.json('You must enter a valid id as a parameter');
-//     }
-
-//     if (!customer.first_name || !customer.last_name || !customer.email || !customer.age) {
-//         return res.json({
-//             ErrorCode: 204,
-//             Message: 'Fields cannot be empty'
-//         });
-//     }
-
-//     let sqlQuery = `UPDATE customers SET first_name = ?, last_name = ?, email = ?, age = ? WHERE id = ${id}`
-
-//     dbConnection.query(sqlQuery, customerObj,  (error, result) => {
-//         if (error) throw error;
-//         if (result.affectedRow === 0) {
-//             res.send('No customer was updated');
-//         }
-//         res.json(`Customer with id ${id} updated successfully`);
-//     });
-// };
 
 
 
