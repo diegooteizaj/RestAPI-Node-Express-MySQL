@@ -76,45 +76,47 @@ const getPersonasById = (req, res) => {
         res.json(`persona with id ${id} updated successfully`);
     });
 };
+const createNewPersona = (req, res) => {
 
+    // Declare that I store the request body in a constant
+    const persona = req.body;
+    // So, I create the object with the table fields by calling the constant customer
+    const personaObj = [
+        persona.id_persona,
+        persona.nombre,
+        persona.rut,
+        persona.fecha_nacimiento,
+        persona.correo,
+        persona.fecha_inicio_contrato,
+        persona.cargo_empresa,
+        persona.telefono
+        
+    ];
+
+    // // This method verifies that the request body has all the complete fields, otherwise the operation will not be executed and sends an error message
+    // if (!customer.first_name || !customer.last_name || !customer.email || !customer.age) {
+    //     return res.json({
+    //         ErrorCode: 204,
+    //         Message: 'Fields cannot be empty'
+    //     });
+    // }
+
+    let sqlQuery = 'INSERT INTO persona (id_persona, nombre, rut, fecha_nacimiento,correo,fecha_inicio_contrato,cargo_empresa,telefono) VALUES ( ?,?,?,?,?,?,?,? )';
+
+    dbConnection.query(sqlQuery, personaObj, (err, result) => {
+        if (err) throw err;
+        res.status(201).json('Customer created with id: ' + result.insertId);
+    });
+};
 
 
 module.exports = {
     getPersonas,
     deleteUnaPersona,
     getPersonasById,
-    updatePersona
+    updatePersona,
+    createNewPersona
 };
-
-
-// export const createNewCustomer = (req, res) => {
-
-//     // Declare that I store the request body in a constant
-//     const customer = req.body;
-//     // So, I create the object with the table fields by calling the constant customer
-//     const customerObj = [
-//         customer.first_name,
-//         customer.last_name,
-//         customer.email,
-//         customer.age
-//     ];
-
-//     // This method verifies that the request body has all the complete fields, otherwise the operation will not be executed and sends an error message
-//     if (!customer.first_name || !customer.last_name || !customer.email || !customer.age) {
-//         return res.json({
-//             ErrorCode: 204,
-//             Message: 'Fields cannot be empty'
-//         });
-//     }
-
-//     let sqlQuery = 'INSERT INTO customers (first_name, last_name, email, age) VALUES ( ?,?,?,? )';
-
-//     dbConnection.query(sqlQuery, customerObj, (err, result) => {
-//         if (err) throw err;
-//         res.status(201).json('Customer created with id: ' + result.insertId);
-//     });
-// };
-
 
 
 
