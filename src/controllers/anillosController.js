@@ -1,29 +1,29 @@
 const dbConnection = require('../database/dbConnection');
 
-const getTramos = (req, res) => {
-    let sqlQuery = 
-    `SELECT t.id_tramo,
-        t.id_tramo_fabrica,
-        z.zona,
-        tm.tipo_material,
-        l.linea,
-        t.girado,
-        t.estado,
-        p.nombre
-        FROM Tramo t,
-        Persona p,
-        Tipo_Material tm,
-        Zona z,
-         Linea l 
-        where t.id_zona = z.id_zona and
-            p.id_persona = t.id_persona AND
-            t.id_tipo_material = tm.id_tipo_material AND
-            t.id_linea = l.id_linea;`
-            ;
+const getAnillos = (req, res) => {
+    let sqlQuery = 'SELECT * FROM anillo';
     dbConnection.query(sqlQuery, (error, results) => {
         if (error) throw error;
         res.status(200).json(results);
     });
+};
+
+const getAnillosPorIdTramo = (req, res) =>{
+    const id = req.params.id;
+    if (isNaN(id)) {
+                return res.json('You must enter a valid id as a parameter');
+    }
+
+    let sqlQuery = `SELECT a.* from Anillo a,  Tramo t 
+                     where a.id_tramo  = t.id_tramo 
+                     and t.id_tramo = ${id};`
+
+    dbConnection.query(sqlQuery, (error , results)=> {
+             if (error) throw error; 
+             res.status(200).json(results);
+    });
+
+    
 };
 
 
@@ -129,7 +129,8 @@ const getTramos = (req, res) => {
 
 
 module.exports = {
-    getTramos,
+    getAnillos,
+    getAnillosPorIdTramo
     // deleteUnaPersona,
     // getPersonasById,
     // updatePersona,
