@@ -1,7 +1,7 @@
 const dbConnection = require('../database/dbConnection');
 
 const getPersonas = (req, res) => {
-    let sqlQuery = 'SELECT * FROM persona';
+    let sqlQuery = 'SELECT * FROM INSPECTOR';
     dbConnection.query(sqlQuery, (error, results) => {
         if (error) throw error;
         res.status(200).json(results);
@@ -19,7 +19,7 @@ const deleteUnaPersona = (req, res) => {
         return res.json('You must enter a valid id as a parameter');
     }
     
-    let sqlQuery = `DELETE FROM persona WHERE id_persona = ${id}`;
+    let sqlQuery = `DELETE FROM INSPECTOR WHERE id_inspector = ${id}`;
 
     dbConnection.query(sqlQuery, error => {
         if (error) throw error; 
@@ -31,7 +31,7 @@ const getPersonasById = (req, res) => {
 
     // const id = parseInt(req.params.id);
     const id = req.params.id
-    let sqlQuery = `SELECT * FROM persona WHERE id_persona = ${id}`;
+    let sqlQuery = `SELECT * FROM INSPECTOR WHERE id_inspector = ${id}`;
 
     // This method verifies that the id passed by parameter is a number, if it is not, it sends an error message
     if (isNaN(id)) {
@@ -50,23 +50,19 @@ const getPersonasById = (req, res) => {
     const persona = req.body;
     const personaObj = [
         persona.nombre,
-        persona.correo,
+        persona.rut,
         persona.telefono,
-        persona.cargo
+        persona.visita
     ];
+
+    console.log('persona obj UPD ->', personaObj);
 
     if (isNaN(id)) {
         return res.json('You must enter a valid id as a parameter');
     }
 
-    // if (!persona.first_name || !persona.last_name || !persona.email || !persona.age) {
-    //     return res.json({
-    //         ErrorCode: 204,
-    //         Message: 'Fields cannot be empty'
-    //     });
-    // }
 
-    let sqlQuery = `UPDATE persona SET nombre = ?, correo = ?, telefono = ?, cargo_empresa = ? WHERE id_persona = ${id}`
+    let sqlQuery = `UPDATE INSPECTOR SET nombre = ?, rut = ?, telefono = ?, visita = ? WHERE id_inspector = ${id}`
 
     dbConnection.query(sqlQuery, personaObj,  (error, result) => {
         if (error) throw error;
@@ -82,14 +78,11 @@ const createNewPersona = (req, res) => {
     const persona = req.body;
     // So, I create the object with the table fields by calling the constant customer
     const personaObj = [
-        persona.id_persona,
+        persona.id_inspector,
         persona.nombre,
         persona.rut,
-        persona.fecha_nacimiento,
-        persona.correo,
-        persona.fecha_inicio_contrato,
-        persona.cargo_empresa,
-        persona.telefono
+        persona.telefono,
+        persona.Visita,
         
     ];
 
@@ -101,7 +94,7 @@ const createNewPersona = (req, res) => {
     //     });
     // }
 
-    let sqlQuery = 'INSERT INTO persona (id_persona, nombre, rut, fecha_nacimiento,correo,fecha_inicio_contrato,cargo_empresa,telefono) VALUES ( ?,?,?,?,?,?,?,? )';
+    let sqlQuery = 'INSERT INTO INSPECTOR (id_inspector, nombre, rut, Telefono, Visita) VALUES ( ?,?,?,?,? )';
 
     dbConnection.query(sqlQuery, personaObj, (err, result) => {
         if (err) throw err;
