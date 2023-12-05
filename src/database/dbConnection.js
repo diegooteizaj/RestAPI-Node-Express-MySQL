@@ -6,6 +6,7 @@ const dbConnection = mysql.createConnection({
   password: '0123456789',
   database: 'mineraUltrasoundDatabase',
   port: '3306',
+  multipleStatements: true, // Habilita el soporte para múltiples consultas
 });
 
 dbConnection.connect((error) => {
