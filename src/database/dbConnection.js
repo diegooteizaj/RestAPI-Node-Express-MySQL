@@ -1,10 +1,10 @@
-const mysql = require('mysql');
+const mysql = require('mysql2');
 
 const dbConnection = mysql.createConnection({
   host: 'localhost',
   user: 'root',
   password: '0123456789',
-  database: 'mineraUltrasoundDatabase',
+  database: 'mineraUltrasounddatabase',
   port: '3306',
   multipleStatements: true, // Habilita el soporte para múltiples consultas
 });
