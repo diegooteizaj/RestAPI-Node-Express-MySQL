@@ -121,37 +121,6 @@ const updateRol = (req, res) => {
 };
 
 
-// // Middleware para parsear el cuerpo JSON de la solicitud
-// app.use(express.json());
-
-// const obtenerRoles = (req, res) => {
-//     const { id_rol } = req.body;
-  
-//     let sqlQuery = `
-//       CALL ObtenerUsuario(?, ?, @codigoError, @codigoOk, @idRol);
-//       SELECT @codigoError AS codigoError, @codigoOk AS codigoOk, @idRol AS idRol;
-//     `;
-  
-//     dbConnection.query(sqlQuery, [id_rol], (error, results) => {
-//       if (error) throw error;
-  
-//       const [result, codes] = results;
-  
-//       const { codigoError, codigoOk, idRol } = codes[0];
-  
-//       console.log('Código de error:', codigoError);
-//       console.log('Código de éxito:', codigoOk);
-//       console.log('ID de Rol:', idRol);
-  
-//       if (codigoError) {
-//         res.status(400).json({ error: 'Usuario no encontrado' });
-//       } else {
-//         res.status(200).json({ codigoError, codigoOk, idRol });
-//       }
-//     });
-//   };
-  
-
 const deleteRol = (req, res) => {
     const id = req.params.id;
 

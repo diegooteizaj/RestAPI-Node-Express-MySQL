@@ -6,7 +6,10 @@ const router = express.Router();
 const {
     getUsuarios,
     obtenerUsuario,
-    getUsuarioById
+    getUsuarioById,
+    createNewUsuario,
+    updateUsuario,
+    deleteUsuario
     // getPersonasById,
     // createNewCustomer,
     // updatePersona,
@@ -19,9 +22,8 @@ const {
 router.get('/', getUsuarios); //localhost:5000/customers/
 router.post('/obtenerUsuario', obtenerUsuario); //localhost:5000/customers/
 router.get('/getUsuarioById/:id', getUsuarioById); //localhost:5000/customers/id/1
-// router.post('/addPersona', createNewPersona); //localhost:5000/customers/add
-// router.put('/updatePersona/:id', updatePersona); //localhost:5000/customers/edit/1
-// router.delete('/deletePersonas/:id', deleteUnaPersona); //localhost:5000/customers/delete/1
-// router.delete('/deleteCustomers', deleteAllCustomers); //localhost:5000/customers/deleteCustomers
+router.post('/addUsuario', createNewUsuario); //localhost:5000/customers/add
+router.put('/updateUsuario/:id', updateUsuario); //localhost:5000/customers/edit/1
+router.delete('/deleteUsuario/:id', deleteUsuario); //localhost:5000/customers/delete/1
 
 module.exports = router;
