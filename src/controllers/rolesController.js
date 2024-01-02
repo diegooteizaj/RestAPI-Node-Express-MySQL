@@ -11,21 +11,38 @@ const getAllRoles = (req, res) => {
 };
 
 
-const getRolesById = (req, res) =>{
+const getRolesById = (req, res) => {
     const id = req.params.id;
+
     if (isNaN(id)) {
-                return res.json('You must enter a valid id as a parameter');
+        return res.status(400).json({
+            errorCode: 400,
+            message: 'Debe ingresar un ID válido como parámetro.'
+        });
     }
 
-    let sqlQuery = `SELECT r.* from roles r where r.id_rol = ${id};`
+    const sqlQuery = 'SELECT r.* FROM roles r WHERE r.id_rol = ?';
 
-    dbConnection.query(sqlQuery, (error , results)=> {
-             if (error) throw error; 
-             res.status(200).json(results);
+    dbConnection.query(sqlQuery, [id], (error, results) => {
+        if (error) {
+            console.error('Error al obtener los roles por ID:', error);
+            return res.status(500).json({
+                errorCode: 500,
+                message: 'Error interno del servidor al obtener los roles por ID.'
+            });
+        }
+
+        if (results.length === 0) {
+            return res.status(404).json({
+                errorCode: 404,
+                message: `No se encontraron roles con el ID ${id}.`
+            });
+        }
+
+        res.status(200).json(results);
     });
-
-    
 };
+
 
 const createNewRol = (req, res) => {
     const rol = req.body;
