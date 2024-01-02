@@ -3,6 +3,7 @@ const tramosRoutes = require('./routes/tramos.routes');
 const anillosRoutes = require('./routes/anillos.routes');
 const usuariosRoutes = require('./routes/usuarios.routes');
 const proyectoRoutes = require('./routes/proyecto.routes');
+const rolesRoutes = require('./routes/roles.routes');
 
 
 const router = (app) => {
@@ -11,6 +12,7 @@ const router = (app) => {
     app.use('/anillos',anillosRoutes);
     app.use('/usuarios',usuariosRoutes);
     app.use('/proyecto',proyectoRoutes);
+    app.use('/roles',rolesRoutes);
 };
 
 module.exports = router;
