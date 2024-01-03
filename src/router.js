@@ -14,6 +14,7 @@ const metricasRoutes = require('./routes/metricas.routes');
 const ductosRoutes = require('./routes/ductos.routes');
 const tasasRoutes = require('./routes/tasas.routes');
 const prediccionesRoutes = require('./routes/predicciones.routes');
+const medicionRoutes = require('./routes/medicion.routes');
 
 
 const router = (app) => {
@@ -33,6 +34,7 @@ const router = (app) => {
     app.use('/ductos',ductosRoutes);
     app.use('/tasas',tasasRoutes);
     app.use('/predicciones',prediccionesRoutes);
+    app.use('/medicionRoutes',medicionRoutes);
 };
 
 module.exports = router;
