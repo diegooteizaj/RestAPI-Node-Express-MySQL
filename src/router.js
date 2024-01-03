@@ -8,6 +8,7 @@ const ubicacionRoutes = require('./routes/ubicacion.routes');
 const sububicacionRoutes = require('./routes/sububicacion.routes');
 const lineaRoutes = require('./routes/linea.routes');
 const tipoMaterialRoutes = require('./routes/tipoMaterial.routes');
+const estadosRoutes = require('./routes/estados.routes');
 
 
 const router = (app) => {
@@ -21,6 +22,7 @@ const router = (app) => {
     app.use('/sububicacion',sububicacionRoutes);
     app.use('/linea',lineaRoutes);
     app.use('/tipoMaterial',tipoMaterialRoutes);
+    app.use('/estados',estadosRoutes);
 };
 
 module.exports = router;
