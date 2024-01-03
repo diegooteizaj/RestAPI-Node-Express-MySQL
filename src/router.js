@@ -7,6 +7,7 @@ const rolesRoutes = require('./routes/roles.routes');
 const ubicacionRoutes = require('./routes/ubicacion.routes');
 const sububicacionRoutes = require('./routes/sububicacion.routes');
 const lineaRoutes = require('./routes/linea.routes');
+const tipoMaterialRoutes = require('./routes/tipoMaterial.routes');
 
 
 const router = (app) => {
@@ -19,6 +20,7 @@ const router = (app) => {
     app.use('/ubicacion',ubicacionRoutes);
     app.use('/sububicacion',sububicacionRoutes);
     app.use('/linea',lineaRoutes);
+    app.use('/tipoMaterial',tipoMaterialRoutes);
 };
 
 module.exports = router;
