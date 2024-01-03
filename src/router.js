@@ -12,6 +12,7 @@ const estadosRoutes = require('./routes/estados.routes');
 const inspectorRoutes = require('./routes/inspector.routes');
 const metricasRoutes = require('./routes/metricas.routes');
 const ductosRoutes = require('./routes/ductos.routes');
+const tasasRoutes = require('./routes/tasas.routes');
 
 
 const router = (app) => {
@@ -27,7 +28,9 @@ const router = (app) => {
     app.use('/tipoMaterial',tipoMaterialRoutes);
     app.use('/estados',estadosRoutes);
     app.use('/inspector',inspectorRoutes);
+    app.use('/metricas',metricasRoutes);
     app.use('/ductos',ductosRoutes);
+    app.use('/tasas',tasasRoutes);
 };
 
 module.exports = router;
