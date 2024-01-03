@@ -8,7 +8,7 @@ const {
     createNewDucto,
     updateDucto,
     deleteDucto
-} = require('../controllers/ductoController.js');
+} = require('../controllers/ductosController.js');
 
 router.get('/', getAllDuctos); // localhost:5000/ductos/
 router.get('/getDuctoById/:id', getDuctoById); // localhost:5000/ductos/getDuctoById/1
