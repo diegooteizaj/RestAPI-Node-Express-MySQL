@@ -4,6 +4,8 @@ const anillosRoutes = require('./routes/anillos.routes');
 const usuariosRoutes = require('./routes/usuarios.routes');
 const proyectoRoutes = require('./routes/proyecto.routes');
 const rolesRoutes = require('./routes/roles.routes');
+const ubicacionRoutes = require('./routes/ubicacion.routes');
+const sububicacionRoutes = require('./routes/sububicacion.routes');
 
 
 const router = (app) => {
@@ -13,6 +15,6 @@ const router = (app) => {
     app.use('/usuarios',usuariosRoutes);
     app.use('/proyecto',proyectoRoutes);
     app.use('/roles',rolesRoutes);
-};
+    app.use('/ubicacion',ubicacionRoutes);};
 
 module.exports = router;
