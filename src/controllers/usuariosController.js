@@ -16,6 +16,11 @@ const getUsuarios = (req, res) => {
 const obtenerUsuario = (req, res) => {
     const { nombreUsuario, password } = req.body;
   
+    // Verificar si todos los parámetros necesarios están presentes
+    if (!nombreUsuario || !password) {
+      return res.status(400).json({ error: 'Faltan parámetros en la solicitud.' });
+    }
+  
     let sqlQuery = `
       CALL ObtenerUsuario(?, ?, @codigoError, @codigoOk, @idRol, @nombre, @correo);
       SELECT @codigoError AS codigoError, @codigoOk AS codigoOk, @idRol AS idRol, @nombre AS nombre, @correo AS correo;
@@ -28,14 +33,14 @@ const obtenerUsuario = (req, res) => {
       }
   
       const [procedureResults, selectResults] = results;
-
+  
       if (selectResults && selectResults.length > 0) {
         const { codigoError, codigoOk, idRol, nombre, correo } = selectResults[0];
-      
+  
         console.log('Código de error:', codigoError);
         console.log('Código de éxito:', codigoOk);
         console.log('ID de Rol:', idRol);
-      
+  
         if (codigoError || codigoOk === -1) {
           res.status(400).json({ error: 'Usuario no encontrado', codigoError: 1, codigoOk: -1, idRol: -1 });
         } else {
@@ -44,9 +49,9 @@ const obtenerUsuario = (req, res) => {
       } else {
         res.status(500).json({ error: 'Resultados inesperados de la llamada al procedimiento almacenado.' });
       }
-      
     });
   };
+  
   
   const getUsuarioById = (req, res) => {
     const id = req.params.id;
