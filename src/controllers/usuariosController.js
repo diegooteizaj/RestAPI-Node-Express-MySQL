@@ -17,29 +17,37 @@ const obtenerUsuario = (req, res) => {
     const { nombreUsuario, password } = req.body;
   
     let sqlQuery = `
-      CALL ObtenerUsuario(?, ?, @codigoError, @codigoOk, @idRol);
-      SELECT @codigoError AS codigoError, @codigoOk AS codigoOk, @idRol AS idRol;
+      CALL ObtenerUsuario(?, ?, @codigoError, @codigoOk, @idRol, @nombre, @correo);
+      SELECT @codigoError AS codigoError, @codigoOk AS codigoOk, @idRol AS idRol, @nombre AS nombre, @correo AS correo;
     `;
   
     dbConnection.query(sqlQuery, [nombreUsuario, password], (error, results) => {
-      if (error) throw error;
-  
-      const [result, codes] = results;
-  
-      const { codigoError, codigoOk, idRol } = codes[0];
-  
-      console.log('Código de error:', codigoError);
-      console.log('Código de éxito:', codigoOk);
-      console.log('ID de Rol:', idRol);
-  
-      if (codigoError) {
-        res.status(400).json({ error: 'Usuario no encontrado', codigoError: 1,codigoOk:-1,idRol:-1 });
-      } else {
-        res.status(200).json({ error:'', codigoError, codigoOk, idRol });
+      if (error) {
+        console.error('Error en la llamada al procedimiento almacenado:', error);
+        return res.status(500).json({ error: 'Error en la llamada al procedimiento almacenado.', details: error.message });
       }
+  
+      const [procedureResults, selectResults] = results;
+
+      if (selectResults && selectResults.length > 0) {
+        const { codigoError, codigoOk, idRol, nombre, correo } = selectResults[0];
+      
+        console.log('Código de error:', codigoError);
+        console.log('Código de éxito:', codigoOk);
+        console.log('ID de Rol:', idRol);
+      
+        if (codigoError || codigoOk === -1) {
+          res.status(400).json({ error: 'Usuario no encontrado', codigoError: 1, codigoOk: -1, idRol: -1 });
+        } else {
+          res.status(200).json({ error: '', codigoError, codigoOk, idRol, nombre, correo });
+        }
+      } else {
+        res.status(500).json({ error: 'Resultados inesperados de la llamada al procedimiento almacenado.' });
+      }
+      
     });
   };
-
+  
   const getUsuarioById = (req, res) => {
     const id = req.params.id;
 
