@@ -177,10 +177,45 @@ const deleteMedicion = (req, res) => {
     });
 };
 
+
+const getMedicionByIdDucto = (req, res) => {
+    const id = req.params.id;
+
+    if (isNaN(id)) {
+        return res.status(400).json({
+            errorCode: 400,
+            message: 'Debe ingresar un ID válido como parámetro.'
+        });
+    }
+
+    const sqlQuery = 'SELECT m.* FROM medicion m WHERE m.id_ducto = ?';
+
+    dbConnection.query(sqlQuery, [id], (error, results) => {
+        if (error) {
+            console.error('Error al obtener la medición por ID:', error);
+            return res.status(500).json({
+                errorCode: 500,
+                message: 'Error interno del servidor al obtener la medición por ID.'
+            });
+        }
+
+        if (results.length === 0) {
+            return res.status(404).json({
+                errorCode: 404,
+                message: `No se encontró ninguna medición con el ID ${id}.`
+            });
+        }
+
+        res.status(200).json(results);
+    });
+};
+
+
 module.exports = {
     getAllMediciones,
     getMedicionById,
     createNewMedicion,
     updateMedicion,
-    deleteMedicion
+    deleteMedicion,
+    getMedicionByIdDucto
 };
