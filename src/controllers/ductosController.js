@@ -169,10 +169,24 @@ const deleteDucto = (req, res) => {
     });
 };
 
+
+const getDuctosEstadoCorreccion = (req, res) => {
+    let sqlQuery = `select distinct DUCTO.id_ducto ,l.nombre ,DUCTO.id_fabricacion , MEDICION.Anillo  from DUCTO , medicion,linea l  
+    where DUCTO.id_ducto = MEDICION.id_ducto
+    and ducto.id_linea = l.id_linea 
+    and MEDICION.id_estado = 4 ;`;
+
+    dbConnection.query(sqlQuery, (error, results) => {
+        if (error) throw error;
+        res.status(200).json(results);
+    });
+};
+
 module.exports = {
     getAllDuctos,
     getDuctoById,
     createNewDucto,
     updateDucto,
-    deleteDucto
+    deleteDucto,
+    getDuctosEstadoCorreccion
 };
