@@ -199,12 +199,12 @@ const getMedicionByIdDucto = (req, res) => {
             });
         }
 
-        if (results.length === 0) {
-            return res.status(404).json({
-                errorCode: 404,
-                message: `No se encontró ninguna medición con el ID ${id}.`
-            });
-        }
+        // if (results.length === 0) {
+        //     return res.status(404).json({
+        //         errorCode: 404,
+        //         message: `No se encontró ninguna medición con el ID ${id}.`
+        //     });
+        // }
 
         res.status(200).json(results);
     });
