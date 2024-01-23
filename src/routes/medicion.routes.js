@@ -10,7 +10,8 @@ const {
     updateMedicion,
     deleteMedicion,
     getMedicionByIdDucto,
-    getMedicionAnillo
+    getMedicionAnillo,
+    getMedicion
 } = require('../controllers/medicionController');
 
 router.get('/', getAllMediciones);
@@ -20,6 +21,7 @@ router.put('/updateMedicion/:id', updateMedicion);
 router.delete('/deleteMedicion/:id', deleteMedicion);
 router.get('/getMedicionByIdDucto/:id',getMedicionByIdDucto);
 router.get('/getMedicionAnillo/:id/:anillo',getMedicionAnillo);
+router.post('/getMedicion',getMedicion)
 
 
 module.exports = router;

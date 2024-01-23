@@ -249,6 +249,58 @@ const getMedicionAnillo = (req, res) => {
     
 };
 
+const getMedicion = (req, res) => {
+    const medicion = req.body;
+
+    const id_ducto = medicion.id_ducto;
+    const anillo = medicion.anillo;
+
+    const sqlQuery = `
+        SELECT 
+            d.id_ducto,
+            d.N_Tramo,
+            tpm.diametro,
+            m.Fecha_medicion,
+            1.8 as tasa_desgaste,
+            m.Espesor_min,
+            m.Fecha_medicion as proxima_medicion,
+            m.Anillo,
+            m.direccion_minimo
+        FROM 
+            tipo_material tpm, ducto d, medicion m
+        WHERE 
+            d.id_tipo_material = tpm.id_tipo_material 
+            AND m.id_ducto = d.id_ducto
+            AND m.Anillo = ?
+            AND d.id_ducto = ?
+            AND m.Fecha_medicion = (
+                SELECT MAX(Fecha_medicion) 
+                FROM medicion 
+                WHERE Anillo = ? AND id_ducto = ?
+            )
+    `;
+
+    dbConnection.query(sqlQuery, [anillo, id_ducto, anillo, id_ducto], (error, results) => {
+        if (error) {
+            console.error('Error al obtener la medición por ID:', error);
+            return res.status(500).json({
+                errorCode: 500,
+                message: 'Error interno del servidor al obtener la medición por ID.',
+                error: error.message  // Proporcionar más información sobre el error
+            });
+        }
+
+        if (results.length === 0) {
+            // Devolver un código de estado 404 si no se encuentra ninguna medición
+            return res.status(404).json({
+                errorCode: 404,
+                message: 'No se encontró ninguna medición para los parámetros proporcionados.'
+            });
+        }
+
+        res.status(200).json(results);
+    });
+};
 
 
 module.exports = {
@@ -258,5 +310,6 @@ module.exports = {
     updateMedicion,
     deleteMedicion,
     getMedicionByIdDucto,
-    getMedicionAnillo
+    getMedicionAnillo,
+    getMedicion
 };
