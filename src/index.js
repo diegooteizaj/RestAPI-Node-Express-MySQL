@@ -1,35 +1,26 @@
 const express = require('express');
 const morgan = require('morgan');
-
-
 const router = require('./router');
 const cors = require('cors');
 
-
-//* Initializations
 const app = express();
-
-
-//* Settings
 const port = 8085;
 
-//* Middlewares
 app.use(morgan('dev'));
 
-//* Enabling cors for all request by usiing cors middleware
-app.use(cors());
+// Configuración específica de CORS para permitir solo solicitudes desde http://localhost:4200
+app.use(cors({
+    origin: 'http://localhost:4200',
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true,
+    optionsSuccessStatus: 204,
+}));
 
-/**
- * * Parse request of content-type: application/json
- * * Parses inconming request with JSON payloads
- */
-app.use( express.json());
-app.use( express.urlencoded( { extended:true } ) );
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-//* Routes
 router(app);
 
-//* Starting the server
-app.listen( port, () => {
+app.listen(port, () => {
     console.log(`Server running in port ${port}`);
 });
