@@ -46,6 +46,7 @@ const getDuctoById = (req, res) => {
 const createNewDucto = (req, res) => {
     const ducto = req.body;
     const ductoObj = [
+        ducto.id_ducto,
         ducto.N_Tramo,
         ducto.id_fabricacion,
         ducto.id_tipo_material,
@@ -54,16 +55,16 @@ const createNewDucto = (req, res) => {
         ducto.id_linea
     ];
 
-    // Verificar que el objeto ducto tiene todos los campos necesarios
-    if (!ducto.N_Tramo || !ducto.id_fabricacion || !ducto.id_tipo_material || !ducto.fecha_montaje || 
-        !ducto.girado || !ducto.id_linea) {
-        return res.status(400).json({
-            errorCode: 400,
-            message: 'Todos los campos deben estar completos.'
-        });
-    }
+    // // Verificar que el objeto ducto tiene todos los campos necesarios
+    // if (!ducto.N_Tramo || !ducto.id_fabricacion || !ducto.id_tipo_material || !ducto.fecha_montaje || 
+    //     !ducto.girado || !ducto.id_linea) {
+    //     return res.status(400).json({
+    //         errorCode: 400,
+    //         message: 'Todos los campos deben estar completos.'
+    //     });
+    // }
 
-    const sqlQuery = 'INSERT INTO ducto (N_Tramo, id_fabricacion, id_tipo_material, fecha_montaje, girado, id_linea) VALUES (?, ?, ?, ?, ?, ?)';
+    const sqlQuery = 'INSERT INTO ducto (id_ducto,N_Tramo, id_fabricacion, id_tipo_material, fecha_montaje, girado, id_linea) VALUES (?,?, ?, ?, ?, ?, ?)';
 
     dbConnection.query(sqlQuery, ductoObj, (err, result) => {
         if (err) {
