@@ -16,6 +16,7 @@ const tasasRoutes = require('./routes/tasas.routes');
 const prediccionesRoutes = require('./routes/predicciones.routes');
 const medicionRoutes = require('./routes/medicion.routes');
 const visitaRoutes = require('./routes/visita.routes');
+const zonaRoutes = require('./routes/zona.routes');
 
 
 const router = (app) => {
@@ -37,6 +38,7 @@ const router = (app) => {
     app.use('/predicciones',prediccionesRoutes);
     app.use('/medicion',medicionRoutes);
     app.use('/visita',visitaRoutes);
+    app.use('/zona',zonaRoutes);
 };
 
 module.exports = router;
