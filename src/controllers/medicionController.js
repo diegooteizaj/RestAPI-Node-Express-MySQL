@@ -290,13 +290,13 @@ const getMedicion = (req, res) => {
             });
         }
 
-        if (results.length === 0) {
-            // Devolver un código de estado 404 si no se encuentra ninguna medición
-            return res.status(404).json({
-                errorCode: 404,
-                message: 'No se encontró ninguna medición para los parámetros proporcionados.'
-            });
-        }
+        // if (results.length === 0) {
+        //     // Devolver un código de estado 404 si no se encuentra ninguna medición
+        //     return res.status(404).json({
+        //         errorCode: 404,
+        //         message: 'No se encontró ninguna medición para los parámetros proporcionados.'
+        //     });
+        // }
 
         res.status(200).json(results);
     });
