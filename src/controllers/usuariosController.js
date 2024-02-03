@@ -2,7 +2,7 @@ const dbConnection = require('../database/dbConnection');
 
 const getUsuarios = (req, res) => {
     let sqlQuery = 
-    `SELECT * FROM Usuario;`
+    `SELECT * FROM usuario;`
             ;
     dbConnection.query(sqlQuery, (error, results) => {
         if (error) throw error;
