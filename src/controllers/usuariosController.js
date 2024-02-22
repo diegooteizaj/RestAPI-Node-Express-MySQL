@@ -2,7 +2,12 @@ const dbConnection = require('../database/dbConnection');
 
 const getUsuarios = (req, res) => {
     let sqlQuery = 
-    `SELECT * FROM usuario;`
+    `SELECT id_Usuario, 
+    nombre, 
+    correo, 
+    HEX(AES_ENCRYPT(password, 'clave_secreta')) AS password_encriptado, 
+    id_rol 
+    FROM mineriaultrasounddatabase.usuario;`
             ;
     dbConnection.query(sqlQuery, (error, results) => {
         if (error) throw error;
